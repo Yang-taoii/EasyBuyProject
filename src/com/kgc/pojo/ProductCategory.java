@@ -2,7 +2,7 @@ package com.kgc.pojo;
 
 import java.util.List;
 
-public class ProductCategory {
+public class ProductCategory {//产品分类实体类
     private int epc_id;
     private String epc_name;
     private int epc_parent_id;

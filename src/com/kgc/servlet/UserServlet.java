@@ -36,9 +36,15 @@ public class UserServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }if ("doRename".equals(method)){
-            System.out.println("!!!!!!!!!!!111");
             try {
                 this.doRename(request,response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if ("logout".equals(method)){
+            try {
+                this.doLogout(request,response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -76,7 +82,7 @@ public class UserServlet extends HttpServlet {
     protected void doLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String loginUserName = request.getParameter("userName");
         String password = request.getParameter("passWord");
-        System.out.println(loginUserName+"--"+password);
+
         List<User> userList = userService.getUserList();
         PrintWriter out = response.getWriter();
         boolean flag = false;//普通用户
@@ -93,8 +99,10 @@ public class UserServlet extends HttpServlet {
             }
         }
         if (flag1){
+            request.getSession().setAttribute("admin","管理员");
             response.sendRedirect("Manage/login-result.jsp");
         }else if(flag){
+            request.getSession().setAttribute("loginUser",loginUserName);
             response.sendRedirect("EasyBuy/login-result.jsp");
         }
         else {
@@ -108,15 +116,13 @@ public class UserServlet extends HttpServlet {
 
     protected void doFindAllUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<User> userList = userService.getUserList();
-        request.getSession().setAttribute("userList",userList);
+        //request.getSession().setAttribute("userList",userList);
     }
 
+    //验证用户名是否重复
     protected void doRename(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<User> userList = userService.getUserList();
         String userName = request.getParameter("name");
-
-        System.out.println(userName);
-
         PrintWriter out = response.getWriter();
         String json = "{\"flag\" : \"true\"}";
         for (User u:userList) {
@@ -128,6 +134,12 @@ public class UserServlet extends HttpServlet {
         out.print(json);
         out.flush();
         out.close();
+    }
+
+    //注销
+    protected void doLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.getSession().removeAttribute("loginUser");
+        response.sendRedirect("EasyBuy/index.jsp");
     }
 
 

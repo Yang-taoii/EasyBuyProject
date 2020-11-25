@@ -1,8 +1,4 @@
 package com.kgc.dao.news;
-
-
-
-import com.kgc.dao.BaseDao;
 import com.kgc.pojo.News;
 
 import java.util.List;
@@ -12,27 +8,38 @@ import java.util.List;
  */
 public interface NewsDao{
 	/**
+	 * 查询全部新闻
+	 */
+	List<News> findAllNews();
+
+
+	/**
 	 * 添加新闻
 	 */
-	void add(News news) throws Exception;
+	void add(News news);
 	/**
 	 * 修改新闻
 	 */
-	void update(News news) throws Exception;
+	void update(News news) ;
 	/**
 	 * 根据id删除新闻
 	 */
-	void deleteById(Integer id) throws Exception;
+	void deleteById(Integer id) ;
 	/**
 	 * 根据id查询新闻
 	 */
-	News getNewsById(Integer id)throws Exception;
+	News getNewsById(Integer id);
 	/**
 	 * 查询新闻列表
 	 */
-	List<News> queryNewsList(News params)throws Exception;
+	List<News> queryNewsList(News params);
 	/**
 	 * 查询新闻的数目
 	 */
-	int queryNewsCount(News params)throws Exception;
+	int queryNewsCount(News params);
+
+
+
+
+
 }

@@ -1,6 +1,8 @@
 package com.kgc.dao.news;
 
-import java.sql.ResultSet;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.kgc.dao.BaseDao;
@@ -8,60 +10,64 @@ import com.kgc.pojo.News;
 
 public class NewsDaoImpl extends BaseDao implements NewsDao {
 
-	public News tableToClass(ResultSet rs) throws Exception {
-		News news = new News();
-		news.setId(rs.getInt("id"));
-		news.setTitle(rs.getString("title"));
-		news.setContent(rs.getString("content"));
-		news.setCreateTime(rs.getDate("createTime"));
-		return news;
+	@Override
+	public List<News> findAllNews() {
+		List<News> newsList = new ArrayList<>();
+		String sql = "select * from easybuy_news";
+		rs = this.query(sql,null);
+		try{
+			while (rs.next()){
+				News news = new News();
+				news.setId(rs.getInt("EN_ID"));
+				news.setContent(rs.getString("EN_CONTENT"));
+				news.setTitle(rs.getString("EN_TITLE"));
+				news.setCreateTime(rs.getDate("EN_CREATE_TIME"));
+				newsList.add(news);
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}finally {
+			this.closeAll(con,ps,rs);
+		}
+		return newsList;
 	}
 
-	public void add(News news) throws Exception {// 保存新闻
+	public void add(News news){// 保存新闻
 		String sql = " INSERT into easybuy_news(title,content,createTime) values( ?, ?, ?) ";
 		Object[] params = new Object[] { news.getTitle(), news.getContent(), new Date() };
 		this.update(sql, params);
 	}
 
-	public void update(News news) throws Exception {// 更新新闻
+	public void update(News news){// 更新新闻
 		String sql = " update easybuy_news set title=?,content=? where id=? ";
 		Object[] params = new Object[] {news.getTitle(), news.getContent(),news.getId() };
 		this.update(sql, params);
 	}
 
-	public void deleteById(Integer id) throws Exception {
+	public void deleteById(Integer id)  {
 		String sql = " delete from easybuy_news where id = ? ";
 		Object params[] = new Object[] { id };
 		this.update(sql.toString(), params);
 	}
 
 	public News getNewsById(Integer id) {
-		String sql = " select * from easybuy_news where id = ? ";
-		ResultSet resultSet = null;
-		News news = null;
-		try {
-			Object params[] = new Object[] { id };
-			resultSet = this.query(sql, params);
-			while (resultSet.next()) {
-				news = tableToClass(resultSet);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			this.closeAll(con,ps,rs);
-			return news;
-		}
+		return null;
 	}
 
+
+
+
+
 	@Override
-	public List<News> queryNewsList(News params) throws Exception {
+	public List<News> queryNewsList(News params) {
 		return null;
 	}
 
 	@Override
-	public int queryNewsCount(News params) throws Exception {
+	public int queryNewsCount(News params)  {
 		return 0;
 	}
+
 
 
 }
