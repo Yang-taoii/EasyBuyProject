@@ -1,6 +1,7 @@
 package com.kgc.servlet;
 
 import com.kgc.pojo.Product;
+import com.kgc.pojo.ShoppingCar;
 import com.kgc.service.product.ProductService;
 import com.kgc.service.product.ProductServiceImpl;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ProductServlet",urlPatterns = "/ProductServlet")
@@ -28,6 +30,11 @@ public class ProductServlet extends HttpServlet {
         if ("showAllProduct".equals(method)){
             this.doShowAll(request,response);
         }
+        if ("productDetail".equals(method)){
+            this.doShowProductDetail(request,response);
+        }
+
+
         out.flush();
         out.close();
     }
@@ -40,12 +47,67 @@ public class ProductServlet extends HttpServlet {
     protected void doShowAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String child_Name = request.getParameter("child_name");
         String father_Name = request.getParameter("father_name");
-        List<Product> list = ps.findALlProduct();
-        request.getSession().setAttribute("AllProduct",list);
+        //根据父类id查询子类所有商品
+        //System.out.println(request.getParameter("epc_id"));
+        int epc_id = Integer.parseInt(request.getParameter("epc_id"));
+        List<Product> list_category = ps.findALlProductById(epc_id);
+        request.getSession().setAttribute("list_category",list_category);
         request.getSession().setAttribute("child_Name",child_Name);
         request.getSession().setAttribute("father_Name",father_Name);
         response.sendRedirect("EasyBuy/product-list.jsp");
     }
+
+
+    //展示商品详情
+    protected void doShowProductDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int ep_id = Integer.parseInt(request.getParameter("ep_id"));
+        System.out.println(ep_id);
+        Product product = ps.findProductById(ep_id);
+        request.getSession().setAttribute("productDetail",product);
+        response.sendRedirect("EasyBuy/product-view.jsp");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //最近浏览
     protected void doRecentlyViewed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,4 +128,6 @@ public class ProductServlet extends HttpServlet {
             }
         }
     }
+
+
 }

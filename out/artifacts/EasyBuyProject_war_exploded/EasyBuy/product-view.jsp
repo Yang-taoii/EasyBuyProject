@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
@@ -9,7 +10,7 @@
 <body>
 <div id="header" class="wrap">
     <div id="logo"><img src="images/logo.gif" /></div>
-    <div class="help"><a href="#" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="register.jsp">注册</a></div>
+    <div class="help"><a href="shopping.jsp" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="register.jsp">注册</a></div>
     <div class="navbar">
         <ul class="clearfix">
             <li class="current"><a href="#">首页</a></li>
@@ -50,46 +51,30 @@
         <div class="box">
             <h2>商品分类</h2>
             <dl>
-                <dt>图书音像</dt>
-                <dd><a href="product-list.jsp">图书</a></dd>
-                <dd><a href="product-list.jsp">音乐</a></dd>
-                <dt>百货</dt>
-                <dd><a href="product-list.jsp">运动健康</a></dd>
-                <dd><a href="product-list.jsp">服装</a></dd>
-                <dd><a href="product-list.jsp">家居</a></dd>
-                <dd><a href="product-list.jsp">美妆</a></dd>
-                <dd><a href="product-list.jsp">母婴</a></dd>
-                <dd><a href="product-list.jsp">食品</a></dd>
-                <dd><a href="product-list.jsp">手机数码</a></dd>
-                <dd><a href="product-list.jsp">家具首饰</a></dd>
-                <dd><a href="product-list.jsp">手表饰品</a></dd>
-                <dd><a href="product-list.jsp">鞋包</a></dd>
-                <dd><a href="product-list.jsp">家电</a></dd>
-                <dd><a href="product-list.jsp">电脑办公</a></dd>
-                <dd><a href="product-list.jsp">玩具文具</a></dd>
-                <dd><a href="product-list.jsp">汽车用品</a></dd>
+                <c:forEach items="${sessionScope.list}" var="pc">
+                    <dt>${pc.epc_name}</dt>
+                    <c:forEach items="${pc.list}" var="list_child">
+                        <dd><a href="<%=request.getContextPath()%>/ProductServlet?method=showAllProduct&child_name=${list_child.epc_name}&father_name=${pc.epc_name}">${list_child.epc_name}</a></dd>
+                    </c:forEach>
+                </c:forEach>
             </dl>
         </div>
     </div>
     <div id="product" class="main">
-        <h1>铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</h1>
+        <h1>${sessionScope.productDetail.ep_name}</h1>
         <div class="infos">
-            <div class="thumb"><img src="images/product/0.jpg" /></div>
+            <div class="thumb"><img src="${sessionScope.productDetail.EP_FILE_NAME}"  alt="图片"/></div>
             <div class="buy">
-                <p>商城价：<span class="price">￥99.00</span></p>
-                <p>库　存：有货</p>
-                <p>库　存：有货</p>
-                <p>库　存：有货</p>
-                <p>库　存：有货</p>
-                <div class="button"><input type="button" name="button" value="" onclick="location.href='shopping.jsp'" /></div>
+                <p>商城价：<span class="price">￥${sessionScope.productDetail.ep_price}</span></p>
+                <p>库　存：${sessionScope.productDetail.EP_STOCK}</p>
+                <div class="button"><input type="button" name="button" value="" onclick="location.href='<%=request.getContextPath()%>/ShoppingCarServlet?method=AddProduct&ep_id=${sessionScope.productDetail.ep_id}'" /></div>
             </div>
             <div class="clear"></div>
         </div>
         <div class="introduce">
             <h2><strong>商品详情</strong></h2>
             <div class="text">
-                sdf<br />
-                sdf<br />
+                ${sessionScope.productDetail.ep_description}<br />
             </div>
         </div>
     </div>

@@ -10,6 +10,8 @@ public interface ProductDao {
     List<Product> findALlProduct();
 
 
-    List<Product> findALlProductById(int id);
+    List<Product> findALlProductById(int id);//根据父类id查询子类所有商品
+
+    Product findProductById(int id);
 
 }

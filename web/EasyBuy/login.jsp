@@ -14,7 +14,7 @@
 <body>
 <div id="header" class="wrap">
     <div id="logo"><img src="images/logo.gif" /></div>
-    <div class="help"><a href="#" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="register.jsp">注册</a></div>
+    <div class="help">没有账户？点击注册--><a href="register.jsp">注册</a></div>
     <div class="navbar">
         <ul class="clearfix">
             <li class="current"><a href="#">首页</a></li>

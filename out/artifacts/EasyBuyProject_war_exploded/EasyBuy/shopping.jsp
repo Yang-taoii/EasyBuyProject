@@ -1,5 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Title</title>
@@ -7,18 +8,21 @@
     <script type="text/javascript" src="scripts/function.js"></script>
 </head>
 <body>
+<% Object name = request.getSession().getAttribute("loginUser");%>
 <div id="header" class="wrap">
-    <div id="logo"><img src="images/logo.gif" /></div>
-    <div class="help"><a href="shopping.jsp" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="register.jsp">注册</a></div>
-    <div class="navbar">
-        <ul class="clearfix">
-            <li class="current"><a href="#">首页</a></li>
-            <li><a href="#">图书</a></li>
-            <li><a href="#">百货</a></li>
-            <li><a href="#">品牌</a></li>
-            <li><a href="#">促销</a></li>
-        </ul>
+    <div id="logo"><img src="images/logo.gif" width="220px" height="80px" /></div>
+    <div class="help">当前用户：${sessionScope.loginUser}<a href="shopping.jsp" class="shopping">购物车(${sessionScope.list_car.size()})</a>
+        <c:if test="<%=name==null%>">
+        <a href="login.jsp">登录</a>
+        <a href="register.jsp">注册</a></div>
+    </c:if>
+
+    <c:if test="<%=name!=null%>">
+        <a href="<%=request.getContextPath()%>/UserServlet?method=logout">注销</a>
+    </c:if>
     </div>
+
+
 </div>
 <div id="childNav">
     <div class="wrap">
@@ -55,27 +59,35 @@
                     <th>购买数量</th>
                     <th>操作</th>
                 </tr>
-                <tr id="product_id_1">
-                    <td class="thumb"><img src="images/product/0_tiny.gif" /><a href="product-view.jsp">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-                    <td class="price" id="price_id_1">
-                        <span>￥99.00</span>
-                        <input type="hidden" value="99" />
-                    </td>
-                    <td class="number">
-                        <dl>
-                            <dt><input id="number_id_1" type="text" name="number" value="1" /></dt>
-                            <dd onclick="javascript:void(0)">修改</dd>
-                        </dl>
-                    </td>
-                    <td class="delete"><a href="javascript:void(0)">删除</a></td>
-                </tr>
+
+
+                <c:forEach items="${sessionScope.list_car}" var="s">
+                    <tr id="product_id_1">
+                        <td class="thumb"><img src="${s.product.EP_FILE_NAME}" /><a href="product-view.jsp">${s.product.ep_name}</a></td>
+                        <td class="price" id="price_id_1">
+                            <span>￥${s.product.ep_price}</span>
+                            <input type="hidden" value="99" />
+                        </td>
+                        <td class="number">
+                            <dl>
+                                <dt><input id="number_id_1" type="text" name="number" value="${s.amount}" /></dt>
+                                <dd onclick="javascript:void(0)">修改</dd>
+                            </dl>
+                        </td>
+                        <td class="delete"><a href="javascript:void(0)">删除</a></td>
+                    </tr>
+                </c:forEach>
+
+
+
             </table>
+            总计：￥${sessionScope.sum_price}
             <div class="button"><input type="submit" value="" /></div>
         </form>
     </div>
-    <script type="text/javascript">
-        document.write("Cookie中记录的购物车商品ID："+ getCookie("product") + "，可以在动态页面中进行读取");
-    </script>
+<%--    <script type="text/javascript">--%>
+<%--        document.write("Cookie中记录的购物车商品ID："+ getCookie("product") + "，可以在动态页面中进行读取");--%>
+<%--    </script>--%>
 </div>
 <div id="footer">
     Copyright &copy; 2010 北大青鸟 All Rights Reserved. 京ICP证1000001号

@@ -20,4 +20,9 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> findALlProductById(int id) {
         return pd.findALlProductById(id);
     }
+
+    @Override
+    public Product findProductById(int id) {
+        return pd.findProductById(id);
+    }
 }

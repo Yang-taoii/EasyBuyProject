@@ -50,7 +50,7 @@
 
 <div id="header" class="wrap">
     <div id="logo"><img src="images/logo.gif" width="220px" height="80px" /></div>
-    <div class="help">用户：${sessionScope.loginUser}&nbsp;<a href="shopping.jsp" class="shopping">购物车</a>
+    <div class="help">用户：${sessionScope.loginUser}&nbsp;<a href="<%=request.getContextPath()%>/ShoppingCarServlet?method=select" class="shopping">购物车</a>
 
         <c:if test="<%=name==null%>">
             <a href="login.jsp">登录</a>
@@ -95,7 +95,7 @@
                 <c:forEach items="${sessionScope.list}" var="pc">
                     <dt>${pc.epc_name}</dt>
                     <c:forEach items="${pc.list}" var="list_child">
-                        <dd><a href="<%=request.getContextPath()%>/ProductServlet?method=showAllProduct&child_name=${list_child.epc_name}&father_name=${pc.epc_name}">${list_child.epc_name}</a></dd>
+                        <dd><a href="<%=request.getContextPath()%>/ProductServlet?method=showAllProduct&child_name=${list_child.epc_name}&father_name=${pc.epc_name}&epc_id=${pc.epc_id}">${list_child.epc_name}</a></dd>
                     </c:forEach>
                 </c:forEach>
             </dl>
@@ -145,10 +145,9 @@
                 <h4>最新公告</h4>
 
                 <ul class="demo2">
-                    <li class="news-item"><a href="news-view.jsp" target="_blank">抢钱啦</a></li>
-                    <li class="news-item"><a href="news-view.jsp" target="_blank">抢钱啦</a></li>
-                    <li class="news-item"><a href="news-view.jsp" target="_blank">抢钱啦</a></li>
-                    <li class="news-item"><a href="news-view.jsp" target="_blank">抢钱啦</a></li>
+                    <c:forEach items="${sessionScope.list_news}" var="news">
+                        <li class="news-item"><a href="#">${news.title}</a></li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="spacer"></div>

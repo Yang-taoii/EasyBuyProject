@@ -35,9 +35,12 @@ public class ProductDaoImpl extends BaseDao implements ProductDao {
     }
 
     @Override
-    public List<Product> findALlProductById(int id) {
+    public List<Product> findALlProductById(int id) { //根据父类id查询子类所有商品
         List<Product> list = new ArrayList<>();
-        String sql = "select * from easybuy_product where EP_ID = ?";
+        String sql = "select * from easybuy_product \n" +
+                "inner join easybuy_product_category\n" +
+                "on easybuy_product_category.EPC_ID = easybuy_product.EPC_ID\n" +
+                "where easybuy_product.EPC_ID = ?";
         Object[] objects = {id};
         rs = this.query(sql,objects);
         try{
@@ -59,5 +62,30 @@ public class ProductDaoImpl extends BaseDao implements ProductDao {
             this.closeAll(con,ps,rs);
         }
         return list;
+    }
+
+    @Override
+    public Product findProductById(int id) {
+        String sql = "select * from easybuy_product where EP_ID = ?";
+        Object[] objects = {id};
+        Product product1 = new Product();
+        rs = this.query(sql,objects);
+        try{
+            while (rs.next()){
+                product1.setEp_id(rs.getInt("EP_ID"));
+                product1.setEp_description(rs.getString("EP_DESCRIPTION"));
+                product1.setEP_FILE_NAME(rs.getString("EP_FILE_NAME"));
+                product1.setEp_name(rs.getString("EP_NAME"));
+                product1.setEp_price(rs.getDouble("EP_PRICE"));
+                product1.setEP_STOCK(rs.getInt("EP_STOCK"));
+                product1.setEPC_CHILD_ID(rs.getInt("EPC_CHILD_ID"));
+                product1.setEPC_ID(rs.getInt("EPC_ID"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            this.closeAll(con,ps,rs);
+        }
+        return product1;
     }
 }
