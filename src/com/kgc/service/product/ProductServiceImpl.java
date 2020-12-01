@@ -25,4 +25,9 @@ public class ProductServiceImpl implements ProductService{
     public Product findProductById(int id) {
         return pd.findProductById(id);
     }
+
+    @Override
+    public List<Product> findProduct(int ep_id, int ep_father_id) {
+        return pd.findProduct(ep_id,ep_father_id);
+    }
 }

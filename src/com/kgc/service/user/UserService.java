@@ -12,4 +12,10 @@ public interface UserService {
 
     int add(User user) throws Exception;//新增用户信息
     List<User> getUserList() throws Exception;//查询全部用户信息
+
+
+    int deleteUserInfo(String name);
+    int insertUserInfo(User user);
+    int updateUserInfo(User user);
+    User selectUserByName(String name);
 }

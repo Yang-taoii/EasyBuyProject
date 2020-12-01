@@ -43,7 +43,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
 	@Override
 	public int fenYeCount() {
-		String sql="select count(1) from user";
+		String sql="select count(1) from easybuy_user";
 		int count=0;
 		rs=query(sql, null);
 		try{
@@ -65,21 +65,55 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
     //更新用户信息
-    public int updateInfo(User user) {
-		String sql = " update easybuy_user set EU_USER_NAME =?,EU_STATUS=?,EU_SEX =?, EU_IDENTITY_CODE =?, EU_EMAIL =?, EU_MOBILE =? WHERE EU_USER_ID =?  ";
-		Object[] objects = {user.getUserName(),user.getStatus(),user.getSex(),user.getIdentityCode(),user.getEmail(),user.getMobile(),user.getId()};
+    public int updateUserInfo(User user) {
+		String sql = " update easybuy_user set EU_USER_ID =?,EU_STATUS=?,EU_SEX =?, EU_IDENTITY_CODE =?, EU_EMAIL =?, EU_MOBILE =?, EU_PASSWORD=? WHERE EU_USER_name =?  ";
+		Object[] objects = {user.getId(),user.getStatus(),user.getSex(),user.getIdentityCode(),user.getEmail(),user.getMobile(),user.getPassword(),user.getUserName()};
 		return this.update(sql,objects);
     }
 
 	@Override
-	public int deleteUserById(String id) throws Exception {
-
-
-		return 0;
+	public int deleteUserById(String name)  {
+		String sql = "delete from easybuy_user where EU_USER_NAME = ? ";
+		Object[] objects = {name};
+		return this.update(sql,objects);
 	}
 
 	@Override
-	public List<User> getUserList() throws Exception {
+	public int insertUserInfo(User user) {
+		String sql = "insert into EASYBUY_USER (EU_USER_ID, EU_USER_NAME, EU_PASSWORD, EU_SEX, EU_BIRTHDAY, EU_IDENTITY_CODE, EU_EMAIL, EU_MOBILE, EU_ADDRESS, EU_STATUS)\n" +
+				"values (?, ?, ?, ?, null, null, null, null, ?, ?)";
+		Object[] objects = {user.getUserName(),user.getUserName(),user.getPassword(),user.getSex(),user.getAddress(),user.getStatus()};
+		return this.update(sql,objects);
+	}
+
+	@Override
+	public User selectUserByName(String name) {
+		String sql = "select * from easybuy_user where EU_USER_NAME = ? ";
+		User uu=new User();
+		Object[] objects = {name};
+		try{
+			rs = this.query(sql,objects);
+			while (rs.next()){
+				uu.setId(rs.getString("EU_USER_ID"));
+				uu.setUserName(rs.getString("EU_USER_NAME"));
+				uu.setPassword(rs.getString("EU_PASSWORD"));
+				uu.setStatus(rs.getInt("EU_STATUS"));
+				uu.setAddress(rs.getString("EU_ADDRESS"));
+				uu.setEmail(rs.getString("EU_EMAIL"));
+				uu.setIdentityCode(rs.getString("EU_IDENTITY_CODE"));
+				uu.setSex(rs.getString("EU_SEX"));
+				uu.setMobile(rs.getString("EU_MOBILE"));
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}finally {
+			this.closeAll(con,ps,rs);
+		}
+		return uu;
+	}
+
+	@Override
+	public List<User> getUserList()  {
 		List<User> list = new ArrayList<>();
 		String sql = "select * from easybuy_user";
 		rs = this.query(sql,null);
@@ -97,20 +131,12 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 				uu.setMobile(rs.getString("EU_MOBILE"));
 				list.add(uu);
 			}
-		}finally {
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		} finally {
 			this.closeAll(con,ps,rs);
 		}
 		return list;
-	}
-
-	@Override
-	public int count() throws Exception {
-		return 0;
-	}
-
-	@Override
-	public User getUser(int id, String userName) throws Exception {
-		return null;
 	}
 
 }

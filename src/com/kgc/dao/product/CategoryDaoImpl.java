@@ -51,6 +51,47 @@ public class CategoryDaoImpl extends BaseDao implements CategoryDao{
         return list;
     }
 
+    //新增产品分类
+    public int insertCategory(ProductCategory category) {
+        String sql = "insert into easybuy_product_category values (?,?,?)";
+        Object[] objects = {category.getEpc_id(),category.getEpc_name(),category.getEpc_parent_id()};
+        return this.update(sql,objects);
+    }
+
+    //删除产品分类
+    public int deleteCategory(int epc_id) {
+        String sql = "delete from easybuy_product_category where EPC_ID = ? ";
+        Object[] objects = {epc_id};
+        return this.update(sql,objects);
+    }
+
+    //修改产品分类
+    public int updateCategory(ProductCategory category) {
+        String sql = "update easybuy_product_category set EPC_ID = ?,EPC_NAME= ? ,EPC_PARENT_ID=? where EPC_ID = ?";
+        Object[] objects = {category.getEpc_id(),category.getEpc_name(),category.getEpc_parent_id(),category.getEpc_id()};
+        return this.update(sql,objects);
+    }
+
+    @Override
+    public ProductCategory findCategoryById(int epc_id) {
+        String sql = "select * from easybuy_product_category where EPC_ID = ?";
+        Object[] objects = {epc_id};
+        ProductCategory pc = new ProductCategory();
+        try{
+            rs = this.query(sql,objects);
+            while (rs.next()){
+
+                pc.setEpc_id(rs.getInt("EPC_ID"));
+                pc.setEpc_name(rs.getString("EPC_NAME"));
+                pc.setEpc_parent_id(rs.getInt("EPC_PARENT_ID"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return pc;
+    }
+
+
     public static void main(String[] args) {
         CategoryDaoImpl cd = new CategoryDaoImpl();
         List<ProductCategory> list = cd.findAllParents();

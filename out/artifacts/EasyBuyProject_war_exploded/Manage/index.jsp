@@ -9,7 +9,7 @@
 <body>
 <div id="header" class="wrap">
 	<div id="logo"><img src="logo.gif" /></div>
-	<div class="help"><a href="index.jsp">返回前台页面</a></div>
+	<div class="help"><a href="<%=request.getContextPath()%>/EasyBuy/index.jsp">返回前台页面</a></div>
 	<div class="navbar">
 		<ul class="clearfix">
 			<li class="current"><a href="index.jsp">首页</a></li>
@@ -23,7 +23,7 @@
 </div>
 <div id="childNav">
 	<div class="welcome wrap">
-		管理员pillys您好，今天是2012-12-21，欢迎回到管理后台。
+		管理员${sessionScope.loginUser}您好，今天是2012-12-21，欢迎回到管理后台。
 	</div>
 </div>
 <div id="position" class="wrap">
@@ -34,9 +34,9 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
+				<dd><em><a href="user-add.jsp">新增</a></em><a href="<%=request.getContextPath()%>/UserServlet?method=showAllUserInfo">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="<%=request.getContextPath()%>/ProductCategoryServlet?method=classification">分类管理</a></dd>
 				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.jsp">订单管理</a></dd>

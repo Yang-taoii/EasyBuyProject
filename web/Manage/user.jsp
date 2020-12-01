@@ -1,18 +1,19 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+﻿<%@ page import="com.kgc.pojo.Page" %>
+<%@ page import="com.kgc.service.user.UserService" %>
+<%@ page import="com.kgc.service.user.UserServiceImpl" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>后台管理 - 易买网</title>
-<link type="text/css" rel="stylesheet" href="style.css" />
-<script type="text/javascript" src="scripts/function-manage.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>后台管理 - 易买网</title>
+	<link type="text/css" rel="stylesheet" href="style.css" />
 </head>
 <body>
+
 <div id="header" class="wrap">
 	<div id="logo"><img src="logo.gif" /></div>
 	<div class="help"><a href="<%=request.getContextPath()%>/EasyBuy/index.jsp">返回前台页面</a></div>
@@ -61,23 +62,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th>手机</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="w1 c">张三丰</td>
-					<td class="w2 c">男</td>
-					<td>fengsan.zhang@prd.com</td>
-					<td class="w4 c">13888888888</td>
-					<td class="w1 c"><a href="user-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">2</td>
-					<td class="w1 c">杨二郎</td>
-					<td class="w2 c">男</td>
-					<td>fengsan.zhang@prd.com</td>
-					<td class="w4 c">13888888888</td>
-					<td class="w1 c"><a href="user-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
+
+				<c:forEach items="${sessionScope.page.list}" var="user" varStatus="sta">
+					<tr>
+						<td class="first w4 c">${user.id}</td>
+						<td class="w1 c">${user.userName}</td>
+						<td class="w2 c">${user.sex}</td>
+						<td>${user.email}</td>
+						<td class="w4 c">${user.mobile}</td>
+						<td class="w1 c"><a href="<%=request.getContextPath()%>/UserServlet?method=getUser&user_name=${user.userName}">修改</a> <a href="<%=request.getContextPath()%>/UserServlet?method=del&user_name=${user.userName}">删除</a></td>
+					</tr>
+				</c:forEach>
 			</table>
+
+			<div>
+				当前页码：【${sessionScope.page.pageIndex}/${sessionScope.page.totalPage}】<br/>
+				<a href="<%=request.getContextPath()%>/UserServlet?method=showAllUserInfo&&pageIndex=1">首页</a>
+				<a href="<%=request.getContextPath()%>/UserServlet?method=showAllUserInfo&&pageIndex=${sessionScope.page.pageIndex-1}">上一页</a>
+				<a href="<%=request.getContextPath()%>/UserServlet?method=showAllUserInfo&&pageIndex=${sessionScope.page.pageIndex+1}">下一页</a>
+				<a href="<%=request.getContextPath()%>/UserServlet?method=showAllUserInfo&&pageIndex=${sessionScope.page.totalPage}">尾页</a>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>

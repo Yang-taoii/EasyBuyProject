@@ -55,7 +55,7 @@ public class ShoppingCarDaoImpl extends BaseDao implements ShoppingCarDao {
 
 
     public int updateProduct(ShoppingCar sc){// 更新商品数
-        String sql = " update update shoppingcar set amount = ? where goods_id = ? ";
+        String sql = "update shoppingcar set amount = ? where goods_id = ? ";
         Object[] params = new Object[] {sc.getAmount(),sc.getGoods_id()};
         return this.update(sql, params);
     }

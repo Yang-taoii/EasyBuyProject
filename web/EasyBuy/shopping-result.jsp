@@ -53,9 +53,9 @@
             <div class="box">
                 <div class="msg">
                     <p>恭喜：购买成功！</p>
-                    <p>正在进入首页...</p>
+                    <p>正在进入订单查看...</p>
                     <script type="text/javascript">
-                        setTimeout("location.href='index.jsp'", 3000);
+                        setTimeout("location.href='shopping-query.jsp'", 3000);
                     </script>
                 </div>
             </div>

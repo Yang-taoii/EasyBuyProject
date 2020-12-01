@@ -1,10 +1,6 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,11 +16,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="navbar">
 		<ul class="clearfix">
 			<li><a href="index.jsp">首页</a></li>
-			<li><a href="user.html">用户</a></li>
-			<li class="current"><a href="product.html">商品</a></li>
+			<li><a href="user.jsp">用户</a></li>
+			<li class="current"><a href="product.jsp">商品</a></li>
 			<li><a href="order.jsp">订单</a></li>
-			<li><a href="guestbook.html">留言</a></li>
-			<li><a href="news.html">新闻</a></li>
+			<li><a href="guestbook.jsp">留言</a></li>
+			<li><a href="news.jsp">新闻</a></li>
 		</ul>
 	</div>
 </div>
@@ -41,38 +37,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.html">用户管理</a></dd>
+				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
 				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
-				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.jsp">订单管理</a></dd>
 				<dt>留言管理</dt>
-				<dd><a href="guestbook.html">留言管理</a></dd>
+				<dd><a href="guestbook.jsp">留言管理</a></dd>
 				<dt>新闻管理</dt>
-				<dd><em><a href="news-add.jsp">新增</a></em><a href="news.html">新闻管理</a></dd>
+				<dd><em><a href="news-add.jsp">新增</a></em><a href="news.jsp">新闻管理</a></dd>
 			</dl>
 		</div>
 	</div>
 	<div class="main">
 		<h2>商品管理</h2>
 		<div class="manage">
+
+
+			<form action="<%=request.getContextPath()%>/ProductServlet?method=select_product" method="post" style="margin-bottom: 30px">
+				商品id：<input type="text" name="ep_id" >&emsp;
+				商品父类id：<input type="text" name="ep_father_id">&emsp;
+				<input type="submit" value="查询">
+			</form>
+
 			<table class="list">
 				<tr>
 					<th>ID</th>
 					<th>商品名称</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="thumb"><img src="images/product/0_tiny.gif" /><a href="product-view.html" target="_blank">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-					<td class="w1 c"><a href="product-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="thumb"><img src="images/product/0_tiny.gif" /><a href="product-view.html" target="_blank">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-					<td class="w1 c"><a href="product-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
+
+				<c:forEach items="${sessionScope.products}" var="p">
+					<tr>
+						<td class="first w4 c">${p.ep_id}</td>
+						<td class="thumb"><img src="${p.EP_FILE_NAME}" /><a href="#" target="_blank">${p.ep_name}</a></td>
+						<td class="w1 c"><a href="product-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
+					</tr>
+				</c:forEach>
 			</table>
 		</div>
 	</div>

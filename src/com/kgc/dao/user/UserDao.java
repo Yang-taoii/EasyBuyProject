@@ -15,18 +15,16 @@ import java.util.List;
 public interface UserDao{
 
 	List<User> fenYe(Page page);
-
 	int fenYeCount();
-
 	int add(User user) throws Exception;//新增用户信息
 
-	int updateInfo(User user) throws Exception;//更新用户信息
 
-	int deleteUserById(String id) throws Exception;
+
+	int updateUserInfo(User user) ;//更新用户信息
+	int deleteUserById(String name) ;
+	int insertUserInfo(User user);
+	User selectUserByName(String name);
 	
-	List<User> getUserList() throws Exception;
-	
-	int count() throws Exception;
-	
-	User getUser(int uid,String loginName) throws Exception;
+	List<User> getUserList() ;
+
 }

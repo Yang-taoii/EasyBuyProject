@@ -88,4 +88,34 @@ public class ProductDaoImpl extends BaseDao implements ProductDao {
         }
         return product1;
     }
+
+    @Override
+    public List<Product> findProduct(int ep_id, int epc_id) { //商品id 或者 商品父类id
+        String sql = "select * from easybuy_product where 1=1 ";
+        List<Product> list_products = new ArrayList<>();
+        if (ep_id != 0){
+            sql += " and EP_ID = "+ep_id+"";
+        }
+        if (epc_id != 0){
+            sql += " and EPC_ID = "+epc_id+"";
+        }
+        rs = this.query(sql,null);
+        try{
+            while (rs.next()){
+                Product p = new Product();
+                p.setEp_id(rs.getInt("EP_ID"));
+                p.setEp_description(rs.getString("EP_DESCRIPTION"));
+                p.setEP_FILE_NAME(rs.getString("EP_FILE_NAME"));
+                p.setEp_name(rs.getString("EP_NAME"));
+                p.setEp_price(rs.getDouble("EP_PRICE"));
+                p.setEP_STOCK(rs.getInt("EP_STOCK"));
+                p.setEPC_CHILD_ID(rs.getInt("EPC_CHILD_ID"));
+                p.setEPC_ID(rs.getInt("EPC_ID"));
+                list_products.add(p);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list_products;
+    }
 }

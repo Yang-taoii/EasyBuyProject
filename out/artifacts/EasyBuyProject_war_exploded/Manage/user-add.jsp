@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -46,7 +47,7 @@
 	<div class="main">
 		<h2>新增用户</h2>
 		<div class="manage">
-			<form action="manage-result.jsp">
+			<form action="<%=request.getContextPath()%>/UserServlet?method=insert" method="post">
 				<table class="form">
 					<tr>
 						<td class="field">用户名：</td>
@@ -58,8 +59,9 @@
 					</tr>
 					<tr>
 						<td class="field">性别：</td>
-						<td><input type="radio" name="sex" value="1" checked="checked" />男 <input type="radio" name="sex" value="1" />女</td>
+						<td><input type="radio" name="sex" value="T" checked="checked" />男 <input type="radio" name="sex" value="F" />女</td>
 					</tr>
+
 					<tr>
 						<td class="field">出生日期：</td>
 						<td>
@@ -77,26 +79,32 @@
 							</select>日
 						</td>
 					</tr>
+
 					<tr>
 						<td class="field">手机号码：</td>
 						<td><input type="text" class="text" name="mobile" value="" /></td>
 					</tr>
+
 					<tr>
 						<td class="field">送货地址：</td>
 						<td><input type="text" class="text" name="address" value="" /></td>
 					</tr>
+
 					<tr>
 						<td class="field">身份证：</td>
 						<td><input type="text" class="text" name="idcode" value="" /></td>
 					</tr>
+
                     <tr>
 						<td class="field">邮箱：</td>
 						<td><input type="text" class="text" name="email" value="" /></td>
 					</tr>
+
 					<tr>
 						<td></td>
 						<td><label class="ui-blue"><input type="submit" name="submit" value="添加" /></label></td>
 					</tr>
+
 				</table>
 			</form>
 		</div>

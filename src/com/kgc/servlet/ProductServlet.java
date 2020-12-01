@@ -34,6 +34,10 @@ public class ProductServlet extends HttpServlet {
             this.doShowProductDetail(request,response);
         }
 
+        if ("select_product".equals(method)){
+            this.doSelectProduct(request,response);
+        }
+
 
         out.flush();
         out.close();
@@ -66,6 +70,28 @@ public class ProductServlet extends HttpServlet {
         request.getSession().setAttribute("productDetail",product);
         response.sendRedirect("EasyBuy/product-view.jsp");
     }
+
+
+    //后端查询商品
+    protected void doSelectProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String ep_ids = request.getParameter("ep_id");
+        String ep_father_ids = request.getParameter("ep_father_id");
+        int ep_id = 0;
+        if (null!=ep_ids && !"".equals(ep_ids)){
+            ep_id = Integer.parseInt(ep_ids);
+        }
+        int ep_father_id = 0;
+        if (null!= ep_father_ids && !"".equals(ep_father_ids)){
+            ep_father_id = Integer.parseInt(ep_father_ids);
+        }
+        System.out.println(ep_id+"---"+ep_father_id);
+        List<Product> products_list_by_condition = ps.findProduct(ep_id,ep_father_id);
+        request.getSession().setAttribute("products",products_list_by_condition);
+        response.sendRedirect("Manage/product.jsp");
+    }
+
+
+
 
 
 

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,6 +8,7 @@
 <script type="text/javascript" src="scripts/function-manage.js"></script>
 </head>
 <body>
+
 <div id="header" class="wrap">
 	<div id="logo"><img src="logo.gif" /></div>
 	<div class="help"><a href="index.jsp">返回前台页面</a></div>
@@ -36,7 +38,7 @@
 				<dt>用户管理</dt>
 				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="#">分类管理</a></dd>
 				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.jsp">订单管理</a></dd>
@@ -56,36 +58,23 @@
 					<th>分类名称</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td>大类</td>
-					<td class="w1 c"><a href="productClass-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="childClass">小类</td>
-					<td class="w1 c"><a href="productClass-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="childClass">小类</td>
-					<td class="w1 c"><a href="productClass-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td>大类</td>
-					<td class="w1 c"><a href="productClass-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="childClass">小类</td>
-					<td class="w1 c"><a href="productClass-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="childClass">小类</td>
-					<td class="w1 c"><a href="productClass-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
+
+				<c:forEach items="${sessionScope.list_father}" var="i" varStatus="sta">
+					<tr>
+						<td class="first w4 c">${sta.index+1}</td>
+						<td>${i.epc_name}</td>
+						<td class="w1 c"><a href="<%=request.getContextPath()%>/ProductCategoryServlet?method=update&epc_id=${i.epc_id}">修改</a> <a href="<%=request.getContextPath()%>/ProductCategoryServlet?method=delete&epc_id=${i.epc_id}">删除</a></td>
+					</tr>
+					<c:forEach items="${i.list}" var="ii" varStatus="sta1">
+						<tr>
+							<td class="first w4 c">${sta1.index+1}</td>
+							<td class="childClass">${ii.epc_name}</td>
+							<td class="w1 c"><a href="<%=request.getContextPath()%>/ProductCategoryServlet?method=update&epc_id=${ii.epc_id}">修改</a> <a href="<%=request.getContextPath()%>/ProductCategoryServlet?method=delete&epc_id=${ii.epc_id}">删除</a></td>
+						</tr>
+					</c:forEach>
+
+				</c:forEach>
+
 			</table>
 		</div>
 	</div>

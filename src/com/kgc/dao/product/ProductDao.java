@@ -14,4 +14,7 @@ public interface ProductDao {
 
     Product findProductById(int id);
 
+    List<Product> findProduct(int epc_id,int epc_father_id);
+
+
 }

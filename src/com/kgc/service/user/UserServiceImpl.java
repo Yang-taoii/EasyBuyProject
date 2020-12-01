@@ -41,6 +41,7 @@ UserDao userDao = new UserDaoImpl();
         return userDao.fenYeCount();
     }
 
+
     @Override
     public int add(User user) throws Exception {
         return userDao.add(user);
@@ -49,6 +50,24 @@ UserDao userDao = new UserDaoImpl();
     @Override
     public List<User> getUserList() throws Exception {
         return userDao.getUserList();
+    }
+
+    //删除
+    public int deleteUserInfo(String name) {
+        return userDao.deleteUserById(name);
+    }
+    //新增
+    public int insertUserInfo(User user) {
+        return userDao.insertUserInfo(user);
+    }
+    //修改
+    public int updateUserInfo(User user) {
+        return userDao.updateUserInfo(user);
+    }
+
+    @Override
+    public User selectUserByName(String name) {
+        return userDao.selectUserByName(name);
     }
 
 

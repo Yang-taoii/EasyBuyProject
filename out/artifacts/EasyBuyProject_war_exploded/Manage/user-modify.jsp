@@ -46,53 +46,44 @@
 	<div class="main">
 		<h2>修改用户</h2>
 		<div class="manage">
-			<form action="manage-result.jsp">
+			<form action="<%=request.getContextPath()%>/UserServlet?method=update" method="post">
 				<table class="form">
+
 					<tr>
 						<td class="field">用户名：</td>
-						<td><input type="text" class="text" name="userName" value="zhangsan" readonly="readonly" /></td>
+						<td><input type="text" class="text" name="userName" readonly="readonly" value="${sessionScope.user_modify.userName}" /></td>
 					</tr>
+
 					<tr>
 						<td class="field">密码：</td>
-						<td><input type="password" class="text" name="passWord" value="zhangsan" /></td>
+						<td><input type="password" class="text" name="passWord" /></td>
 					</tr>
+
 					<tr>
 						<td class="field">性别：</td>
-						<td><input type="radio" name="sex" value="1" checked="checked" />男 <input type="radio" name="sex" value="1" />女</td>
+						<td><input type="radio" name="sex" value="T" checked="checked" />男 <input type="radio" name="sex" value="F" />女</td>
 					</tr>
-					<tr>
-						<td class="field">出生日期：</td>
-						<td>
-							<select name="birthyear">
-								<option value="2000">2000</option>
-								<option value="1999" selected="selected">1999</option>
-							</select>年
-							<select name="birthmonth">
-								<option value="12">12</option>
-								<option value="11" selected="selected">11</option>
-							</select>月
-							<select name="birthday">
-								<option value="2">2</option>
-								<option value="1" selected="selected">1</option>
-							</select>日
-						</td>
-					</tr>
+
 					<tr>
 						<td class="field">手机号码：</td>
-						<td><input type="text" class="text" name="mobile" value="13800000000" /></td>
+						<td><input type="text" class="text" name="mobile" /></td>
 					</tr>
+
 					<tr>
 						<td class="field">送货地址：</td>
-						<td><input type="text" class="text" name="address" value="高老庄" /></td>
+						<td><input type="text" class="text" name="address" /></td>
 					</tr>
+
 					<tr>
 						<td class="field">身份证：</td>
-						<td><input type="text" class="text" name="idcode" value="" /></td>
+						<td><input type="text" class="text" name="identityCode" value="" /></td>
 					</tr>
+
                     <tr>
 						<td class="field">邮箱：</td>
 						<td><input type="text" class="text" name="email" value="" /></td>
 					</tr>
+
 					<tr>
 						<td></td>
 						<td><label class="ui-blue"><input type="submit" name="submit" value="更新" /></label></td>

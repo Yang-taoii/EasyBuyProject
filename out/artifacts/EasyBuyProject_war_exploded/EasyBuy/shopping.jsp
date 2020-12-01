@@ -5,7 +5,26 @@
 <head>
     <title>Title</title>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <script type="text/javascript" src="scripts/function.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="scripts/shopping.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("input#number_id_1").blur(function () {
+                const $amount_input =$(this);
+                const $amount = $amount_input.val();
+                const $goods_id = $amount_input.next().val();
+                const $reserve = $amount_input.next().next().val();
+                alert($reserve+"--"+$goods_id+"--"+$amount);
+                $.post("<%=request.getContextPath()%>/ShoppingCarServlet?method=updateAmount",{"goods_id":$goods_id,"amount":$amount,"reserve":$reserve},function (data) {
+                    if (data.result){
+                        alert("购买修改成功");
+
+                    }else
+                        alert("购买修改失败");
+                },"JSON");
+            });
+        })
+    </script>
 </head>
 <body>
 <% Object name = request.getSession().getAttribute("loginUser");%>
@@ -51,7 +70,7 @@
 </div>
 <div class="wrap">
     <div id="shopping">
-        <form action="shopping-result.jsp">
+        <form action="<%=request.getContextPath()%>/ShoppingCarServlet?method=submit" method="post">
             <table>
                 <tr>
                     <th>商品名称</th>
@@ -70,11 +89,14 @@
                         </td>
                         <td class="number">
                             <dl>
-                                <dt><input id="number_id_1" type="text" name="number" value="${s.amount}" /></dt>
-                                <dd onclick="javascript:void(0)">修改</dd>
+                                <dt>
+                                    <input id="number_id_1" type="text" name="number" value="${s.amount}" />
+                                    <input type="hidden" value="${s.goods_id}">
+                                    <input type="hidden" value="${sessionScope.product_reserve}">
+                                </dt>
                             </dl>
                         </td>
-                        <td class="delete"><a href="javascript:void(0)">删除</a></td>
+                        <td class="delete"><a href="<%=request.getContextPath()%>/ShoppingCarServlet?method=delete&goods_id=${s.goods_id}">删除</a></td>
                     </tr>
                 </c:forEach>
 
@@ -82,12 +104,9 @@
 
             </table>
             总计：￥${sessionScope.sum_price}
-            <div class="button"><input type="submit" value="" /></div>
+            <div class="button"><input type="submit"/></div>
         </form>
     </div>
-<%--    <script type="text/javascript">--%>
-<%--        document.write("Cookie中记录的购物车商品ID："+ getCookie("product") + "，可以在动态页面中进行读取");--%>
-<%--    </script>--%>
 </div>
 <div id="footer">
     Copyright &copy; 2010 北大青鸟 All Rights Reserved. 京ICP证1000001号

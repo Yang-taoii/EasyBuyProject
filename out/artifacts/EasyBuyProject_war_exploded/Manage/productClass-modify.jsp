@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,6 +8,8 @@
 <script type="text/javascript" src="scripts/function-manage.js"></script>
 </head>
 <body>
+
+
 <div id="header" class="wrap">
 	<div id="logo"><img src="logo.gif" /></div>
 	<div class="help"><a href="index.jsp">返回前台页面</a></div>
@@ -50,21 +53,27 @@
 	<div class="main">
 		<h2>修改分类</h2>
 		<div class="manage">
-			<form action="manage-result.jsp">
+			<form action="<%=request.getContextPath()%>/ProductCategoryServlet?method=modify" method="post">
 				<table class="form">
 					<tr>
 						<td class="field">父分类：</td>
 						<td>
 							<select name="parentId">
+								<option value="${sessionScope.pc_father.epc_id}">${sessionScope.pc_father.epc_name}</option>
 								<option value="0" selected="selected">根栏目</option>
-								<option value="1">电器</option>
-								<option value="2">衣服</option>
+								<c:forEach items="${sessionScope.list_father}" var="i">
+									<option value="${i.epc_id}">${i.epc_name}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
+
 					<tr>
 						<td class="field">分类名称：</td>
-						<td><input type="text" class="text" name="className" value="电脑" /></td>
+						<td>
+							<input type="text" class="text" name="className" value="${sessionScope.ProductCategory.epc_name}" />
+							<input type="hidden" name="epc_id" value="${sessionScope.ProductCategory.epc_id}">
+						</td>
 					</tr>
 					<tr>
 						<td></td>
