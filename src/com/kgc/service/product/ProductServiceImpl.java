@@ -30,4 +30,9 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> findProduct(int ep_id, int ep_father_id) {
         return pd.findProduct(ep_id,ep_father_id);
     }
+
+    @Override
+    public int addProduct(Product product) {
+        return pd.addProduct(product);
+    }
 }

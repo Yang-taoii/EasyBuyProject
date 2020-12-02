@@ -2,6 +2,7 @@ package com.kgc.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class News implements Serializable{
 
@@ -10,6 +11,15 @@ public class News implements Serializable{
 	private String title;//标题
 	private String content;//内容
 	private Date createTime;//创建时间
+	private List<News> list;
+
+	public List<News> getList() {
+		return list;
+	}
+
+	public void setList(List<News> list) {
+		this.list = list;
+	}
 
 	public News() {
 	}

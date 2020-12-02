@@ -43,7 +43,7 @@
 				<dt>留言管理</dt>
 				<dd><a href="guestbook.jsp">留言管理</a></dd>
 				<dt>新闻管理</dt>
-				<dd><em><a href="news-add.jsp">新增</a></em><a href="news.jsp">新闻管理</a></dd>
+				<dd><em><a href="news-add.jsp">新增</a></em><a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe">新闻管理</a></dd>
 			</dl>
 		</div>
 	</div>

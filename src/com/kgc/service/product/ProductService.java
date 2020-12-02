@@ -16,4 +16,6 @@ public interface ProductService {
     Product findProductById(int id);//通过产品id查找对应商品
 
     List<Product> findProduct(int ep_id,int ep_father_id);//商品id 或者 商品父类id
+
+    int addProduct(Product product);
 }

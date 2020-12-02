@@ -1,7 +1,4 @@
-﻿<%@ page import="com.kgc.service.product.ProductService" %>
-<%@ page import="com.kgc.service.product.ProductServiceImpl" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.kgc.pojo.Product" %>
+﻿
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

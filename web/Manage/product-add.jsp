@@ -50,11 +50,11 @@
 	<div class="main">
 		<h2>添加商品</h2>
 		<div class="manage">
-			<form action="manage-result.jsp">
+			<form action="<%=request.getContextPath()%>/ProductServlet?method=fileUpload" method="post" enctype="multipart/form-data">
 				<table class="form">
 					<tr>
 						<td class="field">商品名称：</td>
-						<td><input type="text" class="text" name="productName" value="铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机" /></td>
+						<td><input type="text" class="text" name="productName" value="漫画-天官赐福" /></td>
 					</tr>
 					<tr>
 						<td class="field">所属分类：</td>
@@ -79,7 +79,7 @@
 					</tr>
 					<tr>
 						<td class="field">库存：</td>
-						<td><input type="text" class="text tiny" name="productName" /></td>
+						<td><input type="text" class="text tiny" name="stock" /></td>
 					</tr>
 					<tr>
 						<td class="field">描述：</td>

@@ -10,6 +10,15 @@ public class Page implements Serializable {
     private int totalCount;
     private List<User> list;
 
+    public List<News> getList_news() {
+        return list_news;
+    }
+
+    public void setList_news(List<News> list_news) {
+        this.list_news = list_news;
+    }
+
+    private List<News> list_news;
 
     public Page(int pageIndex , int pageSize)  {
         this.pageIndex = pageIndex;

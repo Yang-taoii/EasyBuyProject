@@ -1,4 +1,5 @@
-﻿<%@ page pageEncoding="UTF-8"%>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -52,23 +53,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="main">
 		<h2>新闻管理</h2>
 		<div class="manage">
+
+			<form action="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe" method="post" style="margin-bottom: 30px">
+				新闻id：<input type="text" name="news_id" >&emsp;
+				新闻标题：<input type="text" name="news_title">&emsp;
+				<input type="submit" value="查询">
+			</form>
+
 			<table class="list">
 				<tr>
 					<th>ID</th>
 					<th>新闻标题</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td>高老庄地震了</td>
-					<td class="w1 c"><a href="news-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td>高老庄地震了</td>
-					<td class="w1 c"><a href="news-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
+				<c:forEach items="${sessionScope.pageNews.list_news}" var="n">
+					<tr>
+						<td class="first w4 c">${n.id}</td>
+						<td>${n.title}</td>
+						<td class="w1 c"><a href="news-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
+					</tr>
+				</c:forEach>
+
 			</table>
+			&emsp;&emsp;当前页码：【${sessionScope.pageNews.pageIndex}/${sessionScope.pageNews.totalPage}】
+
+			<a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe&&pageIndex=1">首页</a>&nbsp;
+			<a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe&&pageIndex=${sessionScope.pageNews.pageIndex-1}">上一页</a>&nbsp;
+			<a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe&&pageIndex=${sessionScope.pageNews.pageIndex+1}">下一页</a>&nbsp;
+			<a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe&&pageIndex=${sessionScope.pageNews.totalPage}">尾页</a>
 		</div>
 	</div>
 	<div class="clear"></div>

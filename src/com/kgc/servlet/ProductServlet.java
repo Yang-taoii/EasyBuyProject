@@ -1,9 +1,13 @@
 package com.kgc.servlet;
 
 import com.kgc.pojo.Product;
-import com.kgc.pojo.ShoppingCar;
+
 import com.kgc.service.product.ProductService;
 import com.kgc.service.product.ProductServiceImpl;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +15,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ProductServlet",urlPatterns = "/ProductServlet")
@@ -38,7 +42,9 @@ public class ProductServlet extends HttpServlet {
             this.doSelectProduct(request,response);
         }
 
-
+        if ("fileUpload".equals(method)){
+            this.doFileUpload(request,response);
+        }
         out.flush();
         out.close();
     }
@@ -92,7 +98,63 @@ public class ProductServlet extends HttpServlet {
 
 
 
+    protected void doFileUpload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        //创建FileItemFactory对象(工厂对象)
+        FileItemFactory factory = new DiskFileItemFactory();
+        //创建ServletFileUpload对象，将FileItemFactory作为构造函数
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        upload.setSizeMax(1024*1024*50);
+        Product product = new Product();
+        int ep_id = (int)(Math.random()*1000);
+        product.setEp_id(ep_id);
+        //获取表单中的所有表单元素，得到的是一个List集合，里面装的都是FileItem对象
+        try {
+            List<FileItem> items = upload.parseRequest(request);
+            //循环迭代List集合，每一次循环都是拿到表单中的一个元素（文本框、密码框、文件等）
+            for(FileItem item : items){
+                //判断该元素是表单文本元素还是文件元素
+                if(item.isFormField()){
+                    //如果是普通表单元素，则可以获取到该元素的name和value
+                    String key = item.getFieldName();//表单元素name属性的值
+                    String value = item.getString("utf-8");
+                    if ("productName".equals(key)){
+                        product.setEp_name(value);
+                    }
+                    if ("parentId".equals(key)){
+                        product.setEPC_ID(542);
+                    }
+                    if ("productPrice".equals(key)){
+                        product.setEp_price(Double.parseDouble(value));
+                    }
+                    if ("stock".equals(key)){
+                        product.setEP_STOCK(500);
+                    }
+                    if ("description".equals(key)){
+                        product.setEp_description(value);
+                    }
+                }else{
+                    //如果是文件元素，可以将文件写入到服务器的硬盘中
+                    File file = new File("D:\\TomCat\\apache-tomcat-7.0.106\\picture\\"+item.getName());
+                    item.write(file);
+                    product.setEP_FILE_NAME("images/product/timg.jpg");
+                }
+            }
+
+            int isUpload =ps.addProduct(product);
+
+            if (isUpload>0){
+                System.out.println("上传成功！");
+            }else
+                System.out.println("上传失败！");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            response.sendRedirect("Manage/index.jsp");
+        }
+
+
+    }
 
 
 

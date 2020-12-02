@@ -118,4 +118,12 @@ public class ProductDaoImpl extends BaseDao implements ProductDao {
         }
         return list_products;
     }
+
+    @Override
+    public int addProduct(Product product) {
+        String sql = "insert into EASYBUY_PRODUCT (EP_ID, EP_NAME, EP_DESCRIPTION, EP_PRICE, EP_STOCK, EPC_ID, EPC_CHILD_ID, EP_FILE_NAME)\n" +
+                "values (?, ?, ?, ?, ?, ?, null, ?)";
+        Object[] objects = {product.getEp_id(),product.getEp_name(),product.getEp_description(),product.getEp_price(),product.getEP_STOCK(),product.getEPC_ID(),product.getEP_FILE_NAME()};
+        return this.update(sql,objects);
+    }
 }
