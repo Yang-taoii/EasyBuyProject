@@ -40,8 +40,6 @@
 				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.jsp">订单管理</a></dd>
-				<dt>留言管理</dt>
-				<dd><a href="guestbook.jsp">留言管理</a></dd>
 				<dt>新闻管理</dt>
 				<dd><em><a href="news-add.jsp">新增</a></em><a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe">新闻管理</a></dd>
 			</dl>

@@ -1,9 +1,19 @@
 package com.kgc.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
-    private int eo_id;
+
+    public List<ShoppingCar> getShoppingCar() {
+        return shoppingCar;
+    }
+
+    public void setShoppingCar(List<ShoppingCar> shoppingCar) {
+        this.shoppingCar = shoppingCar;
+    }
+
+    private String eo_id;
     private String eo_user_id;
     private String eo_user_name;
     private String eo_user_address;
@@ -12,14 +22,16 @@ public class Order {
     private int eo_status;
     private int eo_type;
 
+    private List<ShoppingCar> shoppingCar;
+
     public Order() {
     }
 
-    public int getEo_id() {
+    public String getEo_id() {
         return eo_id;
     }
 
-    public void setEo_id(int eo_id) {
+    public void setEo_id(String eo_id) {
         this.eo_id = eo_id;
     }
 

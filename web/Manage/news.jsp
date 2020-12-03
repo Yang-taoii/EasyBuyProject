@@ -40,13 +40,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
+				<dd><em><a href="user-add.jsp">新增</a></em><a href="<%=request.getContextPath()%>/UserServlet?method=showAllUserInfo">用户管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.jsp">订单管理</a></dd>
-				<dt>留言管理</dt>
-				<dd><a href="guestbook.jsp">留言管理</a></dd>
 				<dt>新闻管理</dt>
-				<dd><em><a href="news-add.jsp">新增</a></em><a href="news.jsp">新闻管理</a></dd>
+				<dd><em><a href="news-add.jsp">新增</a></em><a href="<%=request.getContextPath()%>/NewsServlet?method=showNewsByfenYe">新闻管理</a></dd>
 			</dl>
 		</div>
 	</div>

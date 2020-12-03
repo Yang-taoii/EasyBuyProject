@@ -70,7 +70,7 @@
 </div>
 <div class="wrap">
     <div id="shopping">
-        <form action="<%=request.getContextPath()%>/ShoppingCarServlet?method=submit" method="post">
+        <form action="<%=request.getContextPath()%>/OrderServlet?method=submit" method="post">
             <table>
                 <tr>
                     <th>商品名称</th>

@@ -1,5 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Title</title>
@@ -57,37 +58,31 @@
                     <th width="35%" nowrap="nowrap">商品信息</th>
                     <th width="10%">订单状态</th>
                 </tr>
-                <tr valign="middle"  align="center">
-                    <td><span style="font-size:16px;">1</span></td>
-                    <td><h1>2016082500002468</h1></td>
-                    <td>2016-08-24</td>
-                    <td>
-                        <span>已发货</span><br />
-                        <a href="#">确认收货</a><br />
-                        <a href="#">取消订单</a>
-                    </td>
-                    <td>
-                        <p style="font-size:16px;"><img src="images/product/3.jpg" height="100" width="100" style="vertical-align:middle" /> × 3</P>
-                        <p style="font-size:16px;"><img src="images/product/4.jpg" height="100" width="100" style="vertical-align:middle" /> × 3</P>
-                        <p style="font-size:16px;"><img src="images/product/5.jpg" height="100" width="100" style="vertical-align:middle" /> × 3</P>
-                    </td>
-                    <td>交易中</td>
-                </tr>
-                <tr valign="middle"  align="center">
-                    <td width="5%"><span style="font-size:16px;">2</span></td>
-                    <td width="30%"><h1>2016082500002468</h1></td>
-                    <td>2016-08-24</td>
-                    <td>
-                        <span>已发货</span><br />
-                        <span>已确认收货</span><br />
-                        <a href="#">退货</a>
-                    </td>
-                    <td>
-                        <p style="font-size:16px;"><img src="images/product/1.jpg" height="100" width="100" style="vertical-align:middle" /> × 3</P>
-                        <p style="font-size:16px;"><img src="images/product/2.jpg" height="100" width="100" style="vertical-align:middle" /> × 1</P>
-                    </td>
-                    <td>已完成</td>
-                </tr>
+
+                <c:forEach items="${sessionScope.list_order}" varStatus="sta" var="o">
+                    <tr valign="middle"  align="center">
+                        <td><span style="font-size:16px;">${sta.index+1}</span></td>
+                        <td><h1>${o.eo_id}</h1></td>
+                        <td>${o.eo_create_time}</td>
+                        <td>
+                            <span>已发货</span><br />
+                            <a href="#">确认收货</a><br />
+                            <a href="#">取消订单</a>
+                        </td>
+                        <td>
+                            <c:forEach items="${sessionScope.list_car_settlement}" var="lcs">
+                                <p style="font-size:16px;"><img src="${lcs.product.EP_FILE_NAME}" height="100" width="100" style="vertical-align:middle" /> × ${lcs.amount}</P>
+                            </c:forEach>
+<%--                            <p style="font-size:16px;"><img src="images/product/4.jpg" height="100" width="100" style="vertical-align:middle" /> × 3</P>--%>
+<%--                            <p style="font-size:16px;"><img src="images/product/5.jpg" height="100" width="100" style="vertical-align:middle" /> × 3</P>--%>
+                        </td>
+                        <td>交易中</td>
+                    </tr>
+
+                </c:forEach>
+
+
+
             </table>
         </div>
 

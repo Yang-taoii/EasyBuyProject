@@ -46,10 +46,6 @@ public class ShoppingCarServlet extends HttpServlet {
             this.doUpdateProduct(request,response);
         }
 
-        if ("submit".equals(method)){
-            this.doSettlement(request,response);
-        }
-
         out.flush();
         out.close();
     }
@@ -143,20 +139,5 @@ public class ShoppingCarServlet extends HttpServlet {
         }
     }
 
-    //购物车结算
-    protected void doSettlement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //生成订单号
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String order_number = sdf.format(date)+sdf.format(System.currentTimeMillis());
-        System.out.println(order_number);
-        String name =(String)request.getSession().getAttribute("loginUser");
-        List<ShoppingCar> list_car_settlement = scs.selectProductByName(name);
-
-        request.getSession().setAttribute("order_number",order_number);
-        request.getSession().setAttribute("list_car_settlement",list_car_settlement);
-        response.sendRedirect("EasyBuy/shopping-query.jsp");
-
-    }
 }
